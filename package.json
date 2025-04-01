@@ -15,19 +15,27 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
     "@tailwindcss/vite": "^4.0.17",
     "@tanstack/react-router": "^1.65.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.486.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "tailwindcss": "^4.0.17"
+    "tailwind-merge": "^3.1.0",
+    "tailwindcss": "^4.0.17",
+    "tw-animate-css": "^1.2.5"
   },
   "devDependencies": {
     "@tanstack/router-devtools": "^1.65.0",
     "@tanstack/router-plugin": "^1.65.0",
+    "@types/node": "^22.13.16",
     "eslint": "^9.23.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "path": "^0.12.7",
     "vite": "^6.2.4"
   }
 }
