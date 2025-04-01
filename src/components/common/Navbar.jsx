@@ -5,7 +5,7 @@ function Navbar(props) {
         <div className="flex">
           <a
             href="/"
-            className="font-medium tracking-wider text-2xl hover:text-zinc-500 transition:all duration-500"
+            className="font-medium tracking-wider text-2xl hover:text-zinc-500 transition:all duration-500 font-main"
           >
             ThInq
           </a>
@@ -22,7 +22,7 @@ function Navbar(props) {
           )}
           <a
             href="/logout"
-            className="font-bold hover:text-zinc-500 transition-all duration-300"
+            className="font-bold hover:text-zinc-500 transition-all duration-300 font-sub"
           >
             Logout
           </a>

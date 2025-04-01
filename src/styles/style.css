@@ -1,5 +1,11 @@
+/* fonts */
+@import "https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,600;1,600&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Inter:ital,opsz@0,14..32;1,14..32&display=swap";
+
+/* dependencies */
 @import "tailwindcss";
 @import "tw-animate-css";
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -7,6 +13,8 @@
     --color-thinqyellow: #FFD100;
     --color-thinqdarkgray: #202020;
     --color-thinqlightyellow: #FFF4C0;
+    --font-main: "Host Grotesk", "sans-serif";
+    --font-sub: "Inter", "sans-serif";
 }
 
 :root {
