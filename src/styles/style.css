@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@theme {
+    --color-thinqyellow: #FFD100;
+    --color-thinqdarkgray: #202020;
+    --color-thinqlightyellow: #FFF4C0;
+}
