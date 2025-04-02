@@ -25,15 +25,6 @@ function Footer({ backgroundImage, background }) {
           </ul>
         </div>
       </div>
-      <div className="bg-zinc-100 pb-3 text-center">
-        <span className="text-center block text-sm text-gray-500 bg-zinc-100 sm:text-center dark:text-gray-400 pb-6 font-sub">
-          © 2025{" "}
-          <a href="/" className="hover:underline">
-            ThInq
-          </a>
-          . All Rights Reserved.
-        </span>
-      </div>
     </footer>
   );
 }
