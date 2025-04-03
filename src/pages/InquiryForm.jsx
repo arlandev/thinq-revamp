@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Check, ChevronsUpDown } from 'lucide-react';
-// import { cn } from '@/lib/utils';
 
 import Navbar from "@/components/common/Navbar";
-import Footer from "@/components/common/Footer";
 import PageLayout from "@/components/common/PageLayout";
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -165,7 +163,12 @@ const InquiryForm = () => {
                                                 {concerns.map((concern) => (
                                                     <CommandItem key={concern.concernValue} value={concern.concernValue} onSelect={(currentValue) => {
                                                             setConcernValue(currentValue === concernValue ? '' : currentValue);
+                                                            setFormData({
+                                                                ...formData,
+                                                                concern: currentValue
+                                                            });
                                                             setOpenConcerns(false);
+                                                            // add: View FAQs notif, onclick: open in new tab - FAQs
                                                         }}
                                                     >
                                                         {concern.label}
@@ -196,6 +199,10 @@ const InquiryForm = () => {
                                                 {subConcerns.map((concern) => (
                                                     <CommandItem key={concern.subConcernValue} value={concern.subConcernValue} onSelect={(currentValue) => {
                                                             setSubConcernValue(currentValue === subConcernValue ? '' : currentValue);
+                                                            setFormData({
+                                                                ...formData,
+                                                                subconcern: currentValue
+                                                            });
                                                             setOpenSubConcerns(false);
                                                         }}
                                                     >
