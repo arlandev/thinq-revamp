@@ -8,20 +8,116 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import InquiryDetailsDialog from "@/components/common/InquiryDetailsDialog";
 
 import { Button } from "@/components/ui/button";
 
-import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+import React, { useState } from "react";
 import Navbar from "@/components/common/Navbar";
 import WelcomeText from "@/components/common/WelcomeText";
 import PageLayout from "@/components/common/PageLayout";
 
-function HelpdeskPage(props) {
+function HelpdeskPage(props, inquiry) {
+  // add Event Listener for Status column
+  // if status is Closed, then status value is clickable and will show a modal
+  // else, do nothing
+
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [selectedInquiry, setSelectedInquiry] = useState(null);
+
+  const inquiries = [
+    {
+      id: "001",
+      referenceNumber: "INQ-2023-001",
+      inquirer: "john.doe@example.com",
+      concern: "Account Access",
+      status: "New",
+      assignedTo: "John Doe",
+    },
+    {
+      id: "002",
+      referenceNumber: "INQ-2023-002",
+      inquirer: "jane.smith@example.com",
+      concern: "Password Reset",
+      status: "Closed",
+      assignedTo: "Jose Rizal",
+      closedDate: "2023-11-20",
+      closedBy: "Jose Rizal",
+      resolutionNotes:
+        "User's password was successfully reset and account access was restored.",
+    },
+  ];
+
+  const handleStatusClick = (inquiry) => {
+    // if (inquiry.status === "Closed") {
+    // if (inquiry === "Closed") {
+    //   setSelectedInquiry(inquiry);
+    //   setIsDetailsModalOpen(true);
+    // }
+    setIsDetailsModalOpen(true);
+  };
+
+  const ResolutionDetailsModal = () => {
+    // if (!selectedInquiry) return null;
+
+    return (
+      <Dialog open={isDetailsModalOpen} onOpenChange={setIsDetailsModalOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Resolution Details</DialogTitle>
+            <DialogDescription>
+              {/* Inquiry #{selectedInquiry.referenceNumber} */}
+              003
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-3">
+            <div>
+              <p className="text-sm font-medium">Closed Date</p>
+              {/* <p className="text-sm">{selectedInquiry.closedDate}</p> */}
+              2024/01/01
+            </div>
+
+            <div>
+              <p className="text-sm font-medium">Closed By</p>
+              {/* <p className="text-sm">{selectedInquiry.closedBy}</p> */}
+              John Rizal
+            </div>
+
+            <div>
+              <p className="text-sm font-medium">Resolution Notes</p>
+              <p className="text-sm whitespace-pre-wrap">
+                {/* {selectedInquiry.resolutionNotes} */}
+                Resolution Notes here.
+              </p>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button onClick={() => setIsDetailsModalOpen(false)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  };
+
   return (
     <PageLayout navbar={<Navbar link="/test" linkName="Test" />}>
       {/* Welcome Section */}
       <WelcomeText firstName="Test" lastName="Test" />
-
       {/* Tabs Container */}
       <Tabs defaultValue="employees" className="flex-grow flex flex-col">
         <div className="p-8 w-full">
@@ -61,36 +157,76 @@ function HelpdeskPage(props) {
                   <Table className="h-full">
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-[200px]">Employee ID</TableHead>
+                        <TableHead className="w-[200px]">
+                          Inquiry Date
+                        </TableHead>
+                        <TableHead>Ref. No.</TableHead>
+                        <TableHead>Concern</TableHead>
                         <TableHead>Status</TableHead>
-                        <TableHead>Department</TableHead>
-                        <TableHead className="text-right">Inquiries</TableHead>
+                        <TableHead>Assignment</TableHead>
+                        <TableHead className="text-right">Details</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody className="h-full">
                       <TableRow>
-                        <TableCell className="font-medium">EMP001</TableCell>
-                        <TableCell>Active</TableCell>
-                        <TableCell>HR</TableCell>
-                        <TableCell className="text-right">5</TableCell>
+                        <TableCell className="font-medium">
+                          2024/03/12
+                        </TableCell>
+                        <TableCell>001</TableCell>
+                        <TableCell>Account Issue</TableCell>
+                        <TableCell id="statusValue">New</TableCell>
+                        <TableCell
+                          id="assignmentValue"
+                          className="text-red-500 font-medium"
+                        >
+                          Not Yet Assigned
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <InquiryDetailsDialog
+                            inquiry={{
+                              referenceNumber: "001",
+                              inquirerEmail: "john.doe@ust.edu.ph",
+                              affiliation: "College of Science",
+                              concern: "Account Issues",
+                              specificConcern: "Issue with library account",
+                              concernDetails:
+                                "I cannot log into my library account",
+                            }}
+                            trigger={<Button variant="outline">...</Button>}
+                          />
+                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-medium">EMP002</TableCell>
-                        <TableCell>Active</TableCell>
-                        <TableCell>IT</TableCell>
-                        <TableCell className="text-right">3</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">EMP003</TableCell>
-                        <TableCell>Inactive</TableCell>
-                        <TableCell>Finance</TableCell>
-                        <TableCell className="text-right">0</TableCell>
-                      </TableRow>
-                      <TableRow className="h-full">
-                        <TableCell className="font-medium">EMP004</TableCell>
-                        <TableCell>Active</TableCell>
-                        <TableCell>Marketing</TableCell>
-                        <TableCell className="text-right">2</TableCell>
+                        <TableCell className="font-medium">
+                          2024/03/10
+                        </TableCell>
+                        <TableCell>002</TableCell>
+                        <TableCell>Installation Request</TableCell>
+                        <TableCell>
+                          <span
+                            className="text-green-600 cursor-pointer hover:underline"
+                            onClick={() => handleStatusClick()}
+                          >
+                            Closed
+                          </span>
+                        </TableCell>
+                        <TableCell>Jose Rizal</TableCell>
+                        <TableCell className="text-right">
+                          <InquiryDetailsDialog
+                            inquiry={{
+                              referenceNumber: "002",
+                              inquirerEmail: "john.doe@ust.edu.ph",
+                              affiliation: "College of Science",
+                              concern: "Installation Request",
+                              specificConcern:
+                                "Help with installing a software",
+                              concernDetails:
+                                "Please help me install Microsoft Word",
+                              assignedTo: "Jose Rizal",
+                            }}
+                            trigger={<Button variant="outline">...</Button>}
+                          />
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -117,43 +253,73 @@ function HelpdeskPage(props) {
               </div>
             </div>
 
-            {/* Right Column - Students Table */}
+            {/* Right Column - Employees Table */}
             <div className="flex-grow flex flex-col">
               <div className="bg-white rounded-lg shadow-xl flex-grow flex flex-col">
                 <div className="flex flex-col h-full">
                   <Table className="h-full">
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-[200px]">Student ID</TableHead>
+                        <TableHead className="w-[200px]">
+                          Inquiry Date
+                        </TableHead>
+                        <TableHead>Ref. No.</TableHead>
+                        <TableHead>Concern</TableHead>
                         <TableHead>Status</TableHead>
-                        <TableHead>Program</TableHead>
-                        <TableHead className="text-right">Inquiries</TableHead>
+                        <TableHead>Assignment</TableHead>
+                        <TableHead className="text-right">Details</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody className="h-full">
                       <TableRow>
-                        <TableCell className="font-medium">STU001</TableCell>
-                        <TableCell>Enrolled</TableCell>
-                        <TableCell>Computer Science</TableCell>
-                        <TableCell className="text-right">2</TableCell>
+                        <TableCell className="font-medium">
+                          2024/03/13
+                        </TableCell>
+                        <TableCell>004</TableCell>
+                        <TableCell>Main Concern</TableCell>
+                        <TableCell>New</TableCell>
+                        <TableCell
+                          id="assignmentValue"
+                          className="text-red-500 font-medium"
+                        >
+                          Not Yet Assigned
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <InquiryDetailsDialog
+                            inquiry={{
+                              referenceNumber: "004",
+                              inquirerEmail: "john.doe@ust.edu.ph",
+                              affiliation: "College of Science",
+                              concern: "Main Concern",
+                              specificConcern: "Specific concern",
+                              concernDetails: "Concern details",
+                            }}
+                            trigger={<Button variant="outline">...</Button>}
+                          />
+                        </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell className="font-medium">STU002</TableCell>
-                        <TableCell>Enrolled</TableCell>
-                        <TableCell>Business</TableCell>
-                        <TableCell className="text-right">1</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className="font-medium">STU003</TableCell>
-                        <TableCell>On Leave</TableCell>
-                        <TableCell>Engineering</TableCell>
-                        <TableCell className="text-right">3</TableCell>
-                      </TableRow>
-                      <TableRow className="h-full">
-                        <TableCell className="font-medium">STU004</TableCell>
-                        <TableCell>Enrolled</TableCell>
-                        <TableCell>Education</TableCell>
-                        <TableCell className="text-right">0</TableCell>
+                        <TableCell className="font-medium">
+                          2024/03/12
+                        </TableCell>
+                        <TableCell>003</TableCell>
+                        <TableCell>Main Concern</TableCell>
+                        <TableCell>Closed</TableCell>
+                        <TableCell>John Doe</TableCell>
+                        <TableCell className="text-right">
+                          <InquiryDetailsDialog
+                            inquiry={{
+                              referenceNumber: "003",
+                              inquirerEmail: "john.doe@ust.edu.ph",
+                              affiliation: "College of Science",
+                              concern: "Main Concern",
+                              specificConcern: "Specific concern",
+                              concernDetails: "Concern details",
+                              assignedTo: "John Doe",
+                            }}
+                            trigger={<Button variant="outline">...</Button>}
+                          />
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -163,6 +329,7 @@ function HelpdeskPage(props) {
           </div>
         </TabsContent>
       </Tabs>
+      <ResolutionDetailsModal />
     </PageLayout>
   );
 }
