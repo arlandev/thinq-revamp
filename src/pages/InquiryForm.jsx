@@ -49,10 +49,10 @@ const InquiryForm = () => {
     const [subConcernValue, setSubConcernValue] = useState('');
 
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        role: '',
-        affiliation: '',
+        name: 'testname',
+        email: 'testemail',
+        role: 'testrole',
+        affiliation: 'testaffiliation',
         concern: '',
         subconcern: '',
         details: ''
@@ -65,60 +65,36 @@ const InquiryForm = () => {
             [name]: value
         });
     };
-    
-    const nextStep = () => {
-        if (currentStep < 1) {
-            setCurrentStep(currentStep + 1);
+
+    const prevStep = () => {
+        if (currentStep > 0) {
+          setCurrentStep(currentStep - 1);
         }
     };
     
-    const prevStep = () => {
-        if (currentStep > 0) {
-            setCurrentStep(currentStep - 1);
+    const nextStep = (e) => {
+        // Ensure we prevent any default form submission
+        if (e) e.preventDefault();
+        
+        if (currentStep < 2) {
+            setCurrentStep(currentStep + 1);
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
+
+        setCurrentStep(currentStep + 1);
+
         // Handle form submission logic here
       };
     
-    const sections =[
+    const sections =[        
         <>
             <CardHeader className="mt-2">
                 <CardTitle className="text-3xl font-bold font-main justify-self-center">INQUIRY FORM</CardTitle>
-                <CardDescription className="justify-self-center italic">All fields are required.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <div className="grid grid-rows-* gap-4 w-4/5 mx-auto my-3">
-                    <div>
-                        <Label htmlFor="name" className="mb-1">Full Name</Label>
-                        <Input id="name" name="name" value={formData.name} onChange={handleInputChange}></Input>
-                    </div>
-                    
-                    <div>
-                        <Label htmlFor="email" className="mb-1">UST Email Address</Label>
-                        <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange}></Input>
-                    </div>
-                    
-                    <div>
-                        <Label htmlFor="role" className="mb-1">Role</Label>
-                        <Input id="role" name="role" value={formData.role} onChange={handleInputChange}></Input>
-                    </div>
-                    
-                    <div>
-                        <Label htmlFor="affiliation" className="mb-1">Affiliation</Label>
-                        <Input id="affiliation" name="affiliation" value={formData.affiliation} onChange={handleInputChange}></Input>
-                    </div>
-                </div>
-            </CardContent>
-        </>,
-            
-        <>
-            <CardHeader className="mt-2">
-                <CardTitle className="text-3xl font-bold font-main justify-self-center">INQUIRY FORM</CardTitle>
-                <CardDescription className="justify-self-center italic">All fields are required.</CardDescription>
+                <CardDescription className="justify-self-center italic">All fields are required</CardDescription>
             </CardHeader>
             <CardContent>
                 <Card className="bg-primary/5 w-5/6 justify-self-center">
@@ -224,6 +200,48 @@ const InquiryForm = () => {
                     </div>
                 </div>
             </CardContent>
+        </>,
+
+        <>
+            <CardHeader className="mt-2">
+                <CardTitle className="text-3xl font-bold font-main justify-self-center">INQUIRY SUMMARY</CardTitle>
+                <CardDescription className="justify-self-center italic">Review your submission</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Card className="bg-primary/5 w-5/6 justify-self-center">
+                    <CardContent className="grid grid-rows-* text-xs gap-1">
+                        <div className="grid grid-cols-3">
+                            <div className="col-span-1"><p className="font-bold">Main Concern:</p></div>
+                            <div className="col-span-2"><p>{formData.concern}</p></div>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <div className="col-span-1"><p className="font-bold">Specific Concern:</p></div>
+                            <div className="col-span-2"><p>{formData.subconcern}</p></div>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <div className="col-span-1"><p className="font-bold">Concern Details:</p></div>
+                            <div className="col-span-2"><p>{formData.details}</p></div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </CardContent>
+        </>,
+
+        <>
+            <CardHeader className="mt-2">
+                <CardTitle className="text-3xl font-bold font-main justify-self-center">INQUIRY SUBMITTED</CardTitle>
+                <CardDescription className="justify-self-center italic">Take note of your Reference Number</CardDescription>
+            </CardHeader>
+            <CardContent className="font-sub">
+                <Card className="bg-primary/5 w-5/6 justify-self-center my-5">
+                    <CardContent className="grid grid-rows-* gap-2">
+                        <p className="text-center text-md">An email confirmation will be sent to you. Check you Inbox for updates.</p>
+                        <hr className="my-2 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400" />
+                        <p className="text-center text-xl text-bold"><b>REFERENCE NUMBER</b></p>
+                        <p className="text-center text-md text-bold">12345</p>
+                    </CardContent>
+                </Card>
+            </CardContent>
         </>
     
     ]
@@ -246,13 +264,20 @@ const InquiryForm = () => {
                                 {currentStep === 0 ? (
                                     <Button className="col-start-1 cursor-pointer" type="button">CANCEL</Button>
                                 ) : (
-                                    <Button className="col-start-1 cursor-pointer" type="button" onClick={prevStep}>PREV</Button>
+                                    currentStep === 1 ? (
+                                        <Button className="col-start-1 w-3/4 cursor-pointer" type="button" onClick={prevStep}>PREV</Button>
+                                    ) : (
+                                        <Button className="col-start-1 col-span-2 w-3/4 cursor-pointer" type="button">GO TO INBOX</Button>   
+                                    )
                                 )}
 
                                 {currentStep < sections.length - 1 ? (
-                                    <Button className="col-start-5 cursor-pointer" type="button" onClick={nextStep}>NEXT</Button>
-                                ) : (
-                                    <Button className="col-start-5 cursor-pointer" type="submit">SUBMIT</Button>
+                                    currentStep === 1 ? (
+                                       <Button className="col-start-5 cursor-pointer" type="submit">SUBMIT</Button>
+                                    ) : (
+                                        <Button className="col-start-5 cursor-pointer" type="button" onClick={nextStep}>NEXT</Button>
+                                    )) : (
+                                    <Button className="col-start-5 cursor-pointer" type="button">CLOSE</Button>
                                 )}
                             </div>
                         </CardFooter>
