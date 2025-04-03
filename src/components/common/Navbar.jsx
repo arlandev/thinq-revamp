@@ -10,7 +10,7 @@ function Navbar(props) {
             ThInq
           </a>
         </div>
-        <div className="flex flex-row items-center space-x-6">
+        <div className="flex flex-row items-center space-x-6 font-sub">
           {props.link && props.linkName && (
             <a
               href={props.link}

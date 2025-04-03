@@ -1,0 +1,262 @@
+import React, { useState } from 'react';
+import { Check, ChevronsUpDown } from 'lucide-react';
+// import { cn } from '@/lib/utils';
+
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
+import PageLayout from "@/components/common/PageLayout";
+
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Textarea } from "@/components/ui/textarea";
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList
+  } from '@/components/ui/command';
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger
+} from '@/components/ui/popover';
+
+const concerns = [
+    { concernValue: 'concern1', label: 'Concern 1' },
+    { concernValue: 'concern2', label: 'Concern 2' },
+    { concernValue: 'concern3', label: 'Concern 3' },
+    { concernValue: 'concern4', label: 'Concern 4' },
+];
+
+const subConcerns = [
+    { subConcernValue: 'subconcern1', label: 'Sub-Concern 1' },
+    { subConcernValue: 'subconcern2', label: 'Sub-Concern 2' },
+    { subConcernValue: 'subconcern3', label: 'Sub-Concern 3' },
+    { subConcernValue: 'subconcern4', label: 'Sub-Concern 4' },
+];
+
+  
+const InquiryForm = () => {
+    const [currentStep, setCurrentStep] = useState(0);
+
+    const [openConcerns, setOpenConcerns] = useState(false);
+    const [concernValue, setConcernValue] = useState('');
+
+    const [openSubConcerns, setOpenSubConcerns] = useState(false);
+    const [subConcernValue, setSubConcernValue] = useState('');
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        role: '',
+        affiliation: '',
+        concern: '',
+        subconcern: '',
+        details: ''
+    });
+    
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+    
+    const nextStep = () => {
+        if (currentStep < 1) {
+            setCurrentStep(currentStep + 1);
+        }
+    };
+    
+    const prevStep = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form submitted:', formData);
+        // Handle form submission logic here
+      };
+    
+    const sections =[
+        <>
+            <CardHeader className="mt-2">
+                <CardTitle className="text-3xl font-bold font-main justify-self-center">INQUIRY FORM</CardTitle>
+                <CardDescription className="justify-self-center italic">All fields are required.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="grid grid-rows-* gap-4 w-4/5 mx-auto my-3">
+                    <div>
+                        <Label htmlFor="name" className="mb-1">Full Name</Label>
+                        <Input id="name" name="name" value={formData.name} onChange={handleInputChange}></Input>
+                    </div>
+                    
+                    <div>
+                        <Label htmlFor="email" className="mb-1">UST Email Address</Label>
+                        <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange}></Input>
+                    </div>
+                    
+                    <div>
+                        <Label htmlFor="role" className="mb-1">Role</Label>
+                        <Input id="role" name="role" value={formData.role} onChange={handleInputChange}></Input>
+                    </div>
+                    
+                    <div>
+                        <Label htmlFor="affiliation" className="mb-1">Affiliation</Label>
+                        <Input id="affiliation" name="affiliation" value={formData.affiliation} onChange={handleInputChange}></Input>
+                    </div>
+                </div>
+            </CardContent>
+        </>,
+            
+        <>
+            <CardHeader className="mt-2">
+                <CardTitle className="text-3xl font-bold font-main justify-self-center">INQUIRY FORM</CardTitle>
+                <CardDescription className="justify-self-center italic">All fields are required.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Card className="bg-primary/5 w-5/6 justify-self-center">
+                    <CardContent className="grid grid-rows-4 text-xs gap-1">
+                        <div className="grid grid-cols-3">
+                            <div className="col-span-1"><p className="font-bold">Full Name:</p></div>
+                            <div className="col-span-2"><p>{formData.name}</p></div>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <div className="col-span-1"><p className="font-bold">UST Email Address:</p></div>
+                            <div className="col-span-2"><p>{formData.email}</p></div>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <div className="col-span-1"><p className="font-bold">Role:</p></div>
+                            <div className="col-span-2"><p>{formData.role}</p></div>
+                        </div>
+                        <div className="grid grid-cols-3">
+                            <div className="col-span-1"><p className="font-bold">Affiliation:</p></div>
+                            <div className="col-span-2"><p>{formData.affiliation}</p></div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                <div className="mt-5">
+                    <div className="grid grid-rows-* gap-4 w-5/6 mx-auto my-3">
+
+                        <div>
+                            <Label htmlFor="concern" className="mb-1">Concern</Label>
+                            <Popover open={openConcerns} onOpenChange={setOpenConcerns}>
+                                <PopoverTrigger asChild>
+                                    <Button variant="outline" role="combobox" aria-expanded={openConcerns} className="w-64 justify-between">
+                                        {concernValue ? concerns.find((concern) => concern.concernValue === concernValue)?.label : "Select concern..."}
+                                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-64 p-0">
+                                    <Command>
+                                        <CommandInput placeholder="Search concern..." />
+                                        <CommandEmpty>No Concern found.</CommandEmpty>
+                                        <CommandList>
+                                            <CommandGroup>
+                                                {concerns.map((concern) => (
+                                                    <CommandItem key={concern.concernValue} value={concern.concernValue} onSelect={(currentValue) => {
+                                                            setConcernValue(currentValue === concernValue ? '' : currentValue);
+                                                            setOpenConcerns(false);
+                                                        }}
+                                                    >
+                                                        {concern.label}
+                                                    </CommandItem>
+                                                ))}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="specific" className="mb-1">Specific Concern</Label>
+                            <Popover open={openSubConcerns} onOpenChange={setOpenSubConcerns}>
+                                <PopoverTrigger asChild>
+                                    <Button variant="outline" role="combobox" aria-expanded={openSubConcerns} className="w-64 justify-between">
+                                        {subConcernValue ? subConcerns.find((concern) => concern.subConcernValue === subConcernValue)?.label : "Select specfiic concern..."}
+                                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-64 p-0">
+                                    <Command>
+                                        <CommandInput placeholder="Search specific concern..." />
+                                        <CommandEmpty>No Sub-Concern found.</CommandEmpty>
+                                        <CommandList>
+                                            <CommandGroup>
+                                                {subConcerns.map((concern) => (
+                                                    <CommandItem key={concern.subConcernValue} value={concern.subConcernValue} onSelect={(currentValue) => {
+                                                            setSubConcernValue(currentValue === subConcernValue ? '' : currentValue);
+                                                            setOpenSubConcerns(false);
+                                                        }}
+                                                    >
+                                                        {concern.label}
+                                                    </CommandItem>
+                                                ))}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
+                        </div>
+
+                        <div>
+                            <Label htmlFor="details" className="mb-1">Concern:</Label>
+                            <Textarea id="details" name="details" value={formData.details} onChange={handleInputChange}/>
+                        </div>
+                        
+                    </div>
+                </div>
+            </CardContent>
+        </>
+    
+    ]
+
+    return (
+        <PageLayout navbar={<Navbar link="/inbox" linkName="Inbox" />}>
+            
+            <div className="w-full my-auto font-sub">
+                <div className="justify-self-center w-1/2 mb-5">
+                    <Progress value={currentStep === 0 ? 33 : (currentStep === 1 ? 66 : 100)} />
+
+                </div>
+                <form onSubmit={handleSubmit}>
+
+                    <Card className="w-1/2 justify-self-center shadow-md">
+                        {sections[currentStep]}
+
+                        <CardFooter>
+                            <div className="grid grid-cols-5 w-4/5 mx-auto mb-5">
+                                {currentStep === 0 ? (
+                                    <Button className="col-start-1 cursor-pointer" type="button">CANCEL</Button>
+                                ) : (
+                                    <Button className="col-start-1 cursor-pointer" type="button" onClick={prevStep}>PREV</Button>
+                                )}
+
+                                {currentStep < sections.length - 1 ? (
+                                    <Button className="col-start-5 cursor-pointer" type="button" onClick={nextStep}>NEXT</Button>
+                                ) : (
+                                    <Button className="col-start-5 cursor-pointer" type="submit">SUBMIT</Button>
+                                )}
+                            </div>
+                        </CardFooter>
+                    </Card>
+
+                </form>
+                
+            </div>
+
+        </PageLayout>
+    )
+}
+
+export default InquiryForm;
