@@ -23,6 +23,9 @@ import {
     PopoverContent,
     PopoverTrigger
 } from '@/components/ui/popover';
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
+
 
 const concerns = [
     { concernValue: 'concern1', label: 'Concern 1' },
@@ -57,6 +60,8 @@ const InquiryForm = () => {
         subconcern: '',
         details: ''
     });
+
+    const isFormComplete = formData.concern.trim() !== '' && formData.subconcern.trim() !== '' && formData.details.trim() !== ''
     
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -119,7 +124,7 @@ const InquiryForm = () => {
                 </Card>
 
                 <div className="mt-5">
-                    <div className="grid grid-rows-* gap-4 w-5/6 mx-auto my-3">
+                    <div className="grid grid-rows-* gap-5 w-5/6 mx-auto my-3">
 
                         <div>
                             <Label htmlFor="concern" className="mb-1">Concern</Label>
@@ -144,12 +149,22 @@ const InquiryForm = () => {
                                                                 concern: currentValue
                                                             });
                                                             setOpenConcerns(false);
-                                                            // add: View FAQs notif, onclick: open in new tab - FAQs
+                                                            toast(`View FAQs for ${currentValue} concerns`, {
+                                                                description: "Swipe to dismiss",
+                                                                action: {
+                                                                  label: "View",
+                                                                  onClick: (e) => {e.preventDefault(); console.log('open FAQs')}                                                                  ,
+                                                                }, duration: Infinity,
+                                                            })
                                                         }}
                                                     >
                                                         {concern.label}
                                                     </CommandItem>
-                                                ))}
+
+                                                    
+                                                ))
+                                                
+                                                }
                                             </CommandGroup>
                                         </CommandList>
                                     </Command>
@@ -200,6 +215,8 @@ const InquiryForm = () => {
                     </div>
                 </div>
             </CardContent>
+
+            <Toaster />
         </>,
 
         <>
@@ -235,7 +252,7 @@ const InquiryForm = () => {
             <CardContent className="font-sub">
                 <Card className="bg-primary/5 w-5/6 justify-self-center my-5">
                     <CardContent className="grid grid-rows-* gap-2">
-                        <p className="text-center text-md">An email confirmation will be sent to you. Check you Inbox for updates.</p>
+                        <p className="text-center text-md">An email confirmation will be sent to you. Check your inbox for updates.</p>
                         <hr className="my-2 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400" />
                         <p className="text-center text-xl text-bold"><b>REFERENCE NUMBER</b></p>
                         <p className="text-center text-md text-bold">12345</p>
@@ -250,10 +267,11 @@ const InquiryForm = () => {
         <PageLayout navbar={<Navbar link="/inbox" linkName="Inbox" />}>
             
             <div className="w-full my-auto font-sub">
-                <div className="justify-self-center w-1/2 mb-5">
-                    <Progress value={currentStep === 0 ? 33 : (currentStep === 1 ? 66 : 100)} />
-
+                <div className="justify-self-center grid grid-cols-8 w-1/2 mb-5">
+                    <Progress value={currentStep === 0 ? 33 : (currentStep === 1 ? 66 : 100)} className="col-span-7 my-auto"/>
+                    <p className="content-center text-center col-span-1">{currentStep+1} of {sections.length}</p>
                 </div>
+
                 <form onSubmit={handleSubmit}>
 
                     <Card className="w-1/2 justify-self-center shadow-md">
@@ -275,7 +293,7 @@ const InquiryForm = () => {
                                     currentStep === 1 ? (
                                        <Button className="col-start-5 cursor-pointer" type="submit">SUBMIT</Button>
                                     ) : (
-                                        <Button className="col-start-5 cursor-pointer" type="button" onClick={nextStep}>NEXT</Button>
+                                        <Button className="col-start-5 cursor-pointer" type="button" onClick={nextStep} disabled={!isFormComplete}>NEXT</Button>
                                     )) : (
                                     <Button className="col-start-5 cursor-pointer" type="button">CLOSE</Button>
                                 )}
