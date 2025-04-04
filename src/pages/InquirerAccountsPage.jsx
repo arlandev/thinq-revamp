@@ -55,7 +55,7 @@ function InquirerAccountsPage() {
                   <TableHead className="w-1/12">User ID</TableHead>
                   <TableHead className="w-2/12">Name</TableHead>
                   <TableHead className="w-3/12">Email</TableHead>
-                  <TableHead className="w-1/12">Role</TableHead>
+                  <TableHead className="w-2/12">Role</TableHead>
                   <TableHead className="w-1/12">Status</TableHead>
                   <TableHead className="w-3/12 text-right"></TableHead>
                 </TableRow>
