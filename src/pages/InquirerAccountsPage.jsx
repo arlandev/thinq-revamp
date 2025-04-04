@@ -1,6 +1,7 @@
 import PageLayout from "@/components/common/PageLayout";
 import WelcomeText from "@/components/common/WelcomeText";
 import Navbar from "@/components/common/Navbar";
+import AddUserDialog from "@/components/common/AddUserDialog";
 
 import { Button } from "@/components/ui/button";
 
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/table";
 
 function InquirerAccountsPage() {
-  // TODO: Add Edit Dialog and Account Activation Modal
+  // TODO: Add Edit Dialog
 
   return (
     <PageLayout navbar={<Navbar link="" linkName="" />}>
@@ -100,7 +101,7 @@ function InquirerAccountsPage() {
           </div>
         </div>
         <div className="flex justify-center items-center mt-5">
-          <Button className="mx-2 px-6">Add User</Button>
+          <AddUserDialog addType="inquirer" />
           <Button className="mx-2 px-6">Batch Deactivate</Button>
         </div>
       </div>
