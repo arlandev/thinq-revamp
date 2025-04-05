@@ -2,54 +2,51 @@
 
 import * as React from "react";
 import { format, parse, isValid } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
 
-export function DateInput() {
-  const [date, setDate] = React.useState();
-  const [inputValue, setInputValue] = React.useState("");
+export function DateInput({ value, onChange, name, id, className, ...props }) {
   const [error, setError] = React.useState(false);
 
+  // Format the initial value if provided
+  const formattedValue = value
+    ? typeof value === "string"
+      ? value
+      : format(value, "yyyy-MM-dd")
+    : "";
+
   const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputValue(value);
+    const inputValue = e.target.value;
 
-    // Try to parse the date
-    const parsedDate = parse(value, "yyyy-MM-dd", new Date());
+    // Pass the raw value to parent component
+    if (onChange) {
+      onChange(inputValue);
+    }
 
-    if (isValid(parsedDate)) {
-      setDate(parsedDate);
-      setError(false);
+    // Validate the date format
+    if (inputValue) {
+      const parsedDate = parse(inputValue, "yyyy-MM-dd", new Date());
+      setError(!isValid(parsedDate));
     } else {
-      setError(true);
+      setError(false);
     }
   };
 
-  const handleCalendarSelect = (newDate) => {
-    setDate(newDate);
-    setInputValue(newDate ? format(newDate, "yyyy-MM-dd") : "");
-    setError(false);
-  };
-
   return (
-    <div className="items-start">
+    <div className="items-start w-full">
       <div className="flex-1">
         <Input
           type="date"
-          value={inputValue}
+          id={id}
+          name={name}
+          value={formattedValue}
           onChange={handleInputChange}
           className={cn(
             "w-full",
             error && "border-red-500 focus-visible:ring-red-500",
+            className,
           )}
+          {...props}
         />
         {error && (
           <p className="text-sm text-red-500 mt-1">
