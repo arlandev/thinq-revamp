@@ -4,9 +4,7 @@ import Navbar from "@/components/common/Navbar";
 import AddUserDialog from "@/components/common/AddUserDialog";
 
 import { Button } from "@/components/ui/button";
-
 import DeactivateButton from "@/components/common/DeactivateButton";
-
 import {
   Table,
   TableBody,

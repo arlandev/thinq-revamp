@@ -17,11 +17,11 @@ const App = () => {
   return (
     <>
       {/* COMMON PAGES */}
-      {/* <Login></Login> */}
+      {/* <Login /> */}
 
       {/* INQUIRER PAGES */}
-      {/* <InquirerHome></InquirerHome> */}
-      {/* <InquiryForm></InquiryForm> */}
+      {/* <InquirerHome /> */}
+      {/* <InquiryForm /> */}
 
       {/* HEALPDESK PAGES */}
       {/* <HelpdeskPage /> */}
@@ -30,7 +30,7 @@ const App = () => {
       {/* <PersonnelHomePage /> */}
 
       {/* ADMIN PAGES */}
-      <AdminHome></AdminHome>
+      {/* <AdminHome /> */}
       <InquirerAccountsPage />
     </>
   );

@@ -18,7 +18,7 @@ function DeactivateButton(props) {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className={`w-24 ${props.disable ? "bg-red-700" : "bg-green-700"}`}
+          className={`w-24 ${props.disable ? "bg-red-700" : "bg-green-700 hover:bg-green-600"}`}
           variant={props.disable ? "destructive" : "default"}
         >
           {props.disable ? "Deactivate" : "Activate"}

@@ -159,9 +159,7 @@ const InquiryForm = () => {
                                                         }}
                                                     >
                                                         {concern.label}
-                                                    </CommandItem>
-
-                                                    
+                                                    </CommandItem>        
                                                 ))
                                                 
                                                 }
