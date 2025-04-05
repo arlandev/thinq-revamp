@@ -8,6 +8,7 @@ import HelpdeskPage from "./pages/HelpdeskPage";
 import PersonnelHomePage from "./pages/PersonnelHomePage";
 import InquiryForm from "./pages/InquiryForm";
 import InquirerAccountsPage from "./pages/InquirerAccountsPage";
+import InquirerInbox from "./pages/InquirerInbox";
 
 // components
 import Navbar from "/src/components/common/Navbar";
@@ -22,6 +23,7 @@ const App = () => {
       {/* INQUIRER PAGES */}
       {/* <InquirerHome /> */}
       {/* <InquiryForm /> */}
+      {/* <InquirerInbox /> */}
 
       {/* HEALPDESK PAGES */}
       {/* <HelpdeskPage /> */}

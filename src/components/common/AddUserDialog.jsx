@@ -42,7 +42,6 @@ function AddUserDialog(user) {
   };
 
   const removeUserForm = (id) => {
-    // Prevent removing the last form
     if (newUser.length > 1) {
       setNewUser(newUser.filter((newUser) => newUser.id !== id));
     }
