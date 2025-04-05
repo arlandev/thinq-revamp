@@ -1,6 +1,8 @@
 import PageLayout from "@/components/common/PageLayout";
 import WelcomeText from "@/components/common/WelcomeText";
 import Navbar from "@/components/common/Navbar";
+import AccountsPageTitle from "@/components/common/AccountsPageTitle";
+
 import AddUserDialog from "@/components/common/AddUserDialog";
 
 import { Button } from "@/components/ui/button";
@@ -68,9 +70,8 @@ function InquirerAccountsPage() {
           </svg>
         </Button>
       </div>
-      <h1 className="text-3xl font-main font-bold my-10 justify-self-center text-center">
-        INQUIRER ACCOUNTS
-      </h1>
+
+      <AccountsPageTitle userType="INQUIRER"/>
 
       <div className="flex-grow flex flex-col">
         <div className="bg-white rounded-lg shadow-xl flex-grow flex flex-col">
