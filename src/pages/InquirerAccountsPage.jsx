@@ -15,6 +15,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import EditDialog from "@/components/common/EditDialog";
+
 function InquirerAccountsPage() {
   // TODO: Add Edit Dialog
 
@@ -62,7 +64,18 @@ function InquirerAccountsPage() {
               <TableBody className="h-full">
                 <TableRow>
                   <TableCell>
-                    <Button>Edit</Button>
+                    <EditDialog
+                      user={{
+                        name: "John Doe",
+                        email: "john.doe@ust.edu.ph",
+                      }}
+                      onSave={(updatedUser) => {
+                        console.log("User updated:", updatedUser);
+                        // TODO: update logic
+                      }}
+                    >
+                      Edit
+                    </EditDialog>
                   </TableCell>
                   <TableCell className="font-medium">00001</TableCell>
                   <TableCell>John Doe</TableCell>
