@@ -16,6 +16,32 @@ import {
 } from "@/components/ui/table";
 
 import EditDialog from "@/components/common/EditDialog";
+import BatchDeactivateDialog from "@/components/common/BatchDeactivateDialog";
+
+// sample users for testing
+const users = [
+  {
+    id: "00001",
+    email: "john.doe@ust.edu.ph",
+    role: "Student",
+    isActive: true,
+    hasActiveTickets: true,
+  },
+  {
+    id: "00002",
+    email: "jane.smith@ust.edu.ph",
+    role: "Teacher",
+    isActive: true,
+    hasActiveTickets: false,
+  },
+  {
+    id: "00003",
+    email: "john.legend@ust.edu.ph",
+    role: "Staff",
+    isActive: false,
+    hasActiveTickets: false,
+  },
+];
 
 function InquirerAccountsPage() {
   // TODO: Add Edit Dialog
@@ -111,9 +137,9 @@ function InquirerAccountsPage() {
             </Table>
           </div>
         </div>
-        <div className="flex justify-center items-center mt-5">
+        <div className="flex justify-center gap-10 mt-5">
           <AddUserDialog addType="inquirer" />
-          <Button className="mx-2 px-6">Batch Deactivate</Button>
+          <BatchDeactivateDialog className="mx-10 px-6" users={users} />
         </div>
       </div>
     </PageLayout>
